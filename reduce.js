@@ -78,3 +78,61 @@ console.log(result2); // [2, 6, 10]
 
 //출처 : https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 //       https://medium.com/@hongkevin/js-3-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EB%B0%B0%EC%97%B4-%EB%A9%94%EC%84%9C%EB%93%9C-reduce-100-%ED%99%9C%EC%9A%A9%EB%B2%95-feat-egghead-io-97c679857ece
+
+
+
+//7.26 reduce 함수 좀 더 이해 내용
+
+
+
+//일반함수 사용
+var sum = [0, 1, 2, 3].reduce(function (accumulator, currentValue) {
+    return accumulator + currentValue;
+}, 0);  //0은 accumulator 초기값 0을 나타낸다.
+/*
+accumulator => 0 0 1 3
+currentvalue=> 0 1 2 3
+ */
+// sum is 6
+//화살표함수 사용
+var sum1 = [0, 1, 2, 3].reduce((accumulator, currentValue) =>accumulator + currentValue, 0);
+
+
+
+//배열과 합쳐 복잡하게 사용하는 방법
+let max=-Infinity, min = Infinity;
+
+//일반함수 사용(reduce랑 분리)
+let h1 = function([min, max], v){
+    min = Math.min(v, min);
+    max = Math.max(max, v - min);
+    return [min ,max];
+}
+let p1 = [ 23171, 21011, 21123, 21366, 21013, 21367 ].reduce(h1,[min,max])[1];
+
+//화살표함수 사용(reduce랑 분리)
+let h2 = ([min, max], v) => {
+    min = Math.min(v, min);
+    max = Math.max(max, v - min);
+    return [min ,max];
+}
+let p2 = [ 23171, 21011, 21123, 21366, 21013, 21367 ].reduce(h2,[min,max])[1];
+
+//일반함수 사용(reduce랑 분리)
+let p3 = [ 23171, 21011, 21123, 21366, 21013, 21367 ].reduce(function([min, max], v){
+    min = Math.min(v, min);
+    max = Math.max(max, v - min);
+    return [min ,max];
+},[min,max])[1];
+
+//화살표함수 사용(reduce와 결합)
+let p4 = [ 23171, 21011, 21123, 21366, 21013, 21367 ].reduce(([min, max], v) => {
+    min = Math.min(v, min);
+    max = Math.max(max, v - min);
+    return [min ,max];
+},[min,max])[1];
+
+console.log(p1);
+console.log(p2);
+console.log(p3);
+console.log(p4);
